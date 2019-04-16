@@ -12,6 +12,10 @@ public class FripperController : MonoBehaviour
     //弾いた時の傾き
     private float flickAngle = -20;
 
+    //発展課題タップした指の区別のためfingerid用の変数を用意
+    private int leftfingerID = 0;
+    private int rightfingerID = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,30 +43,41 @@ public class FripperController : MonoBehaviour
 
         //ここから発展課題
 
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            //マルチタッチを扱えるように配列の変数を用意
+            //マルチタッチを扱えるようにTouchクラスの配列のtouches変数を用意
             Touch[] touches = Input.touches;
 
             for (int i = 0; i < Input.touchCount; i++)
             {
-                //タッチした時
-                if (touch.phase == TouchPhase.Began)
+            //タッチした時
+            if (touches[i].phase == TouchPhase.Began)
+            {
+                if (touches[i].position.x < Screen.width / 2 && tag == "LeftFripperTag")
                 {
-                    if (touches[i].position.x < Screen.width / 2 && tag == "LeftFripperTag") { SetAngle(this.flickAngle); }
-
-                    if (touches[i].position.x >= Screen.width / 2 && tag == "RightFripperTag") { SetAngle(this.flickAngle); }
+                    this.leftfingerID = touches[i].fingerId;
+                    SetAngle(this.flickAngle);
                 }
 
-                //タッチした指が離された時
-                if (touch.phase == TouchPhase.Ended)
+                else if (touches[i].position.x >= Screen.width / 2 && tag == "RightFripperTag")
+                {
+                    this.rightfingerID = touches[i].fingerId;
+                    SetAngle(this.flickAngle);
+                }
+            }
+
+            //タッチした指が離された時
+            else if (touches[i].phase == TouchPhase.Ended)
+            {
+                if (this.leftfingerID == touches[i].fingerId && tag == "LeftFripperTag")
+                {
+                    SetAngle(this.defaultAngle);
+                }
+                else if (this.rightfingerID == touches[i].fingerId && tag == "RightFripperTag")
                 {
                     SetAngle(this.defaultAngle);
                 }
             }
-        }
+            }
+        
     }
 
     //フリッパーの傾きを設定

@@ -53,23 +53,27 @@ public class BallController : MonoBehaviour
         //タグに応じて点数加算
         if(TagName == "SmallStarTag")
         {
-            this.score += 10;
-            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
+            AddScore(10);
         }
         else if(TagName == "LargeStarTag")
         {
-            this.score += 100;
-            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
+            AddScore(100);
         }
         else if(TagName == "SmallCloudTag")
         {
-            this.score += 50;
-            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
+            AddScore(50);
         }
         else if (TagName == "LargeCloudTag")
         {
-            this.score += 150;
-            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
+            AddScore(150);
         }
     }
+
+    //引数ぶんスコア加算する
+    void AddScore(int point)
+    {
+        this.score += point;
+        this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
+    }
+
 }
