@@ -27,6 +27,9 @@ public class BallController : MonoBehaviour
         //シーン中のScoreTextオブジェクトを取得
         this.ScoreText = GameObject.Find("ScoreText");
 
+        //ScoreTextにスコア初期値を表示
+        this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
+
     }
 
     // Update is called once per frame
@@ -39,8 +42,6 @@ public class BallController : MonoBehaviour
             this.gameoverText.GetComponent<Text>().text = "Game Over";
         }
 
-        //ScoreTextにスコア初期値を表示
-        this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
 
     }
 
@@ -53,18 +54,22 @@ public class BallController : MonoBehaviour
         if(TagName == "SmallStarTag")
         {
             this.score += 10;
+            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
         }
         else if(TagName == "LargeStarTag")
         {
             this.score += 100;
+            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
         }
         else if(TagName == "SmallCloudTag")
         {
             this.score += 50;
+            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
         }
         else if (TagName == "LargeCloudTag")
         {
             this.score += 150;
+            this.ScoreText.GetComponent<Text>().text = "SCORE :" + score;
         }
     }
 }

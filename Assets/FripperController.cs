@@ -38,30 +38,31 @@ public class FripperController : MonoBehaviour
 
 
         //ここから発展課題
-        Touch touch = Input.GetTouch(0);
 
-        //マルチタッチを扱えるように配列の変数を用意
-        Touch[] touches = Input.touches;
-
-        for (int i = 0; i < Input.touchCount; i++)
+        if (Input.touchCount > 0)
         {
-            //タッチした時
-            if (touch.phase == TouchPhase.Began)
+            Touch touch = Input.GetTouch(0);
+
+            //マルチタッチを扱えるように配列の変数を用意
+            Touch[] touches = Input.touches;
+
+            for (int i = 0; i < Input.touchCount; i++)
             {
-                if (touches[i].position.x < Screen.width / 2 && tag == "LeftFripperTag") { SetAngle(this.flickAngle); }
+                //タッチした時
+                if (touch.phase == TouchPhase.Began)
+                {
+                    if (touches[i].position.x < Screen.width / 2 && tag == "LeftFripperTag") { SetAngle(this.flickAngle); }
 
-                if (touches[i].position.x >= Screen.width / 2 && tag == "RightFripperTag") { SetAngle(this.flickAngle); }
-            }
+                    if (touches[i].position.x >= Screen.width / 2 && tag == "RightFripperTag") { SetAngle(this.flickAngle); }
+                }
 
-            //タッチした指が離された時
-            if (touch.phase == TouchPhase.Ended)
-            {
-                if (touches[i].position.x < Screen.width / 2 && tag == "LeftFripperTag") { SetAngle(this.defaultAngle); }
-
-                if (touches[i].position.x >= Screen.width / 2 && tag == "RightFripperTag") { SetAngle(this.defaultAngle); }
+                //タッチした指が離された時
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    SetAngle(this.defaultAngle);
+                }
             }
         }
-
     }
 
     //フリッパーの傾きを設定
